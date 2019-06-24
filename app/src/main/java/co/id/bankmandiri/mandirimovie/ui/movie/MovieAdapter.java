@@ -2,8 +2,11 @@ package co.id.bankmandiri.mandirimovie.ui.movie;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +16,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
 
@@ -49,9 +56,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieVH> {
     @Override
     public void onBindViewHolder(@NonNull MovieVH holder, int position) {
         holder.tvTitle.setText(movies.get(position).getTitle());
-        Picasso.get().load(Constant.BASE_IMAGE_URL + movies.get(position)
-                .getPosterPath()).into(holder.ivMovie);
+        Glide.with(mContext).load(Constant.BASE_IMAGE_URL + movies.get(position).getPosterPath())
+                .centerCrop().dontAnimate().listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                return false;
+            }
 
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                return false;
+            }
+        }).into(holder.ivMovie);
     }
 
     @Override

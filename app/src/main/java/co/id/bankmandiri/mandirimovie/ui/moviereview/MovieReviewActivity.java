@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
 
@@ -29,6 +30,7 @@ public class MovieReviewActivity extends BaseActivity implements MovieReviewMvpV
     Toolbar toolbar;
     RecyclerView rvGenre;
     TextView tvError;
+    TextView tvTitleToolbar;
 
     @Inject
     MovieReviewAdapter adapter;
@@ -50,6 +52,7 @@ public class MovieReviewActivity extends BaseActivity implements MovieReviewMvpV
         toolbar = findViewById(R.id.toolbar);
         rvGenre = findViewById(R.id.rv_genre);
         tvError = findViewById(R.id.tv_error);
+        tvTitleToolbar = findViewById(R.id.tv_title_toolbar);
 
         init();
     }
@@ -58,7 +61,8 @@ public class MovieReviewActivity extends BaseActivity implements MovieReviewMvpV
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Genres");
+        getSupportActionBar().setTitle("");
+        tvTitleToolbar.setText("Review");
 
         Bundle bundle = getIntent().getExtras();
         movieId = bundle.getInt("movie_id");
@@ -73,6 +77,15 @@ public class MovieReviewActivity extends BaseActivity implements MovieReviewMvpV
     protected void onDestroy() {
         super.onDestroy();
         movieReviewPresenter.detachView();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

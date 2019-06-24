@@ -27,6 +27,7 @@ public class GenreActivity extends BaseActivity implements GenreMvpView {
     Toolbar toolbar;
     RecyclerView rvGenre;
     TextView tvError;
+    TextView tvTitleToolbar;
 
     @Inject
     GenreAdapter adapter;
@@ -47,15 +48,17 @@ public class GenreActivity extends BaseActivity implements GenreMvpView {
         toolbar = findViewById(R.id.toolbar);
         rvGenre = findViewById(R.id.rv_genre);
         tvError = findViewById(R.id.tv_error);
+        tvTitleToolbar = findViewById(R.id.tv_title_toolbar);
 
         init();
     }
 
     private void init() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Genres");
+        getSupportActionBar().setHomeButtonEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setTitle("");
+        tvTitleToolbar.setText("Genre");
 
         rvGenre.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvGenre.setAdapter(adapter);

@@ -9,6 +9,7 @@
         <item name="android:textColorPrimary">@color/colorPrimaryText</item>
         <item name="android:divider">@color/colorDivider</item>
         <item name="android:windowBackground">@color/colorWhite</item>
+        <item name="homeAsUpIndicator">@drawable/ic_back</item>
     </style>
 
 </resources>

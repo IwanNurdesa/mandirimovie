@@ -7,13 +7,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailMvpV
     TextView tvError;
     TextView tvTitleDetail;
     TextView tvUserReview;
+    TextView tvTitleToolbar;
 
     @Inject
     MovieDetailPresenter movieDetailPresenter;
@@ -59,6 +61,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailMvpV
         tvTitleDetail = findViewById(R.id.tv_title_detail);
         ivPoster = findViewById(R.id.iv_poster_detail);
         tvUserReview = findViewById(R.id.tv_user_reviews);
+        tvTitleToolbar = findViewById(R.id.tv_title_toolbar);
 
         init();
     }
@@ -68,6 +71,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailMvpV
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Genres");
+        tvTitleToolbar.setText("Movie Detail");
 
         Bundle bundle = getIntent().getExtras();
         movieId = bundle.getInt("movie_id");
@@ -79,6 +83,15 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailMvpV
     protected void onDestroy() {
         super.onDestroy();
         movieDetailPresenter.detachView();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -99,8 +112,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailMvpV
         mMovie = movie;
 
         tvTitleDetail.setText(mMovie.getTitle());
-        Picasso.get().load(Constant.BASE_IMAGE_URL + movie
-                .getPosterPath()).into(ivPoster);
+        Glide.with(this).load(Constant.BASE_IMAGE_URL + movie
+                .getPosterPath()).centerCrop().into(ivPoster);
         tvUserReview.setOnClickListener(v -> {
             Intent intent = new Intent(this, MovieReviewActivity.class);
             intent.putExtra("movie_id", mMovie.getId());
