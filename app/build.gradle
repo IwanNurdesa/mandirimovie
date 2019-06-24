@@ -16,6 +16,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    lintOptions {
+        disable 'RestrictedApi'
+    }
 }
 
 dependencies {
@@ -33,6 +40,7 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:multidex:1.0.3'
 
     // square retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
@@ -41,11 +49,14 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
 
     // google dagger 2
-    compile 'com.google.dagger:dagger-android:2.23.2'
-    compile 'com.google.dagger:dagger-android-support:2.23.2' // if you use the support libraries
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.23.2'
+    implementation 'com.google.dagger:dagger:2.23.2'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.23.2'
 
     // okhttp 3
     implementation 'com.squareup.okhttp3:okhttp:3.14.2'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.14.2'
+
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }
